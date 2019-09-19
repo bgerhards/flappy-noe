@@ -20,6 +20,12 @@ public class ScoreControllerScript : MonoBehaviour
         SetScoreText();
     }
 
+    public void ResetScore()
+    {
+        Score = 0;
+        SetScoreText();
+    }
+
     public int GetScore()
     {
         return Score;

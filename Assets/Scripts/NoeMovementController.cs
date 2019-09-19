@@ -24,18 +24,29 @@ public class NoeMovementController : MonoBehaviour
         GameController = GameObjectHelper.GetGameController();
         ScoreController = GameObjectHelper.GetScoreController();
 
+
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameController.GetComponent<GameControllerScript>().IsGameRunning())
         {
-            transform.rotation = forwardRotation;
-            rb.velocity = Vector3.zero;
-            rb.AddForce(Vector2.up * tapForce, ForceMode2D.Force);
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                transform.rotation = forwardRotation;
+                rb.velocity = Vector3.zero;
+                rb.AddForce(Vector2.up * tapForce, ForceMode2D.Force);
+            }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, downRotation, tiltSmooth * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, downRotation, tiltSmooth * Time.deltaTime);
+        }
+    }
+
+    public void ResetNoe()
+    {
+        rb.gameObject.transform.position = new Vector3(-1, 0, 0);
+        rb.velocity = new Vector2(0,0);
+        rb.simulated = true;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
